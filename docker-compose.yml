@@ -1,8 +1,8 @@
-version: "3.8"
-
 services:
   brev-container:
-    build: .
+    build: 
+      context: https://github.com/Intron7/brev.docker.git # Path where Dockerfile is located
+      dockerfile: Dockerfile 
     runtime: nvidia
     container_name: brev-jupyter
     ports:
