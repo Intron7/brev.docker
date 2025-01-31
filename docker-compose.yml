@@ -1,19 +1,23 @@
 services:
-  brev-container:
-    build: 
-      context: https://github.com/Intron7/brev.docker.git # Path where Dockerfile is located
-      dockerfile: Dockerfile 
+  rapids:
+    image: nvcr.io/nvidia/rapidsai/notebooks:24.12-cuda12.5-py3.12
+    container_name: rapids-container
     runtime: nvidia
-    container_name: brev-jupyter
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
     ports:
       - "8888:8888"
+      - "8787:8787"  # Dask Dashboard (optional)
+      - "8786:8786"  # Dask Scheduler (optional)
+    
     volumes:
-      - .:/workspace
-    environment:
-      - NVIDIA_VISIBLE_DEVICES=all
-      - NVIDIA_DRIVER_CAPABILITIES=compute,utility
-      - CUDA_HOME=/usr/local/cuda
-      - LD_LIBRARY_PATH=/usr/local/cuda/lib64
-      - PATH=/opt/venv/bin:/usr/local/cuda/bin:$PATH
-      - UV_HTTP_TIMEOUT=120
-    command: ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.token=''", "--NotebookApp.password=''"]
+      - ./workspace:/home/rapids/notebooks/rsc  # Mount local directory
+
+    command: >
+      bash -c "pip install uv && uv pip install --system rapids-singlecell decoupler omnipath wget gdown && jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''"
+

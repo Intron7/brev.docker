@@ -15,7 +15,7 @@ ENV LD_LIBRARY_PATH "/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 ENV LIBRARY_PATH "/usr/local/cuda/lib64:$LIBRARY_PATH"
 ENV PATH "/opt/venv/bin:$PATH"
 ENV UV_HTTP_TIMEOUT 120
-RUN uv pip install jupyterlab 'rapids-singlecell[rapids12]' ipywidgets --extra-index-url=https://pypi.nvidia.com --index-strategy=unsafe-best-match
+RUN uv pip install jupyterlab 'rapids-singlecell[rapids12]' decoupler omnipath ipywidgets --extra-index-url=https://pypi.nvidia.com --index-strategy=unsafe-best-match
 
 # Expose JupyterLab default port
 EXPOSE 8888
