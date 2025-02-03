@@ -16,5 +16,5 @@ services:
       - "8786:8786"  # Dask Scheduler (optional)
 
     command: >
-      bash -c "pip install uv && uv pip install --system rapids-singlecell decoupler omnipath wget gdown && jupyter lab --ip='*'' --port=8888 --NotebookApp.token='' --NotebookApp.password=''"
+      bash -c "pip install uv && uv pip install --system rapids-singlecell decoupler omnipath wget gdown && jupyter lab --ip='*' --port=8888 --NotebookApp.token='' --NotebookApp.password=''"
 
