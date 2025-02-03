@@ -1,6 +1,6 @@
 services:
   rapids:
-    image: nvcr.io/nvidia/rapidsai/base:24.12-cuda12.5-py3.12
+    image: nvcr.io/nvidia/rapidsai/notebooks:24.12-cuda12.5-py3.12
     container_name: rapids-singlecell-container
     runtime: nvidia
     deploy:
@@ -11,8 +11,10 @@ services:
               count: all
               capabilities: [gpu]
     ports:
+      - "8888:8888"
       - "8787:8787"  # Dask Dashboard (optional)
       - "8786:8786"  # Dask Scheduler (optional)
 
     command: >
-      bash -c "pip install uv && uv pip install --system rapids-singlecell decoupler omnipath wget gdown"
+      bash -c "pip install uv && uv pip install --system rapids-singlecell decoupler omnipath wget gdown && jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''"
+
