@@ -16,7 +16,7 @@ services:
               count: all
               capabilities: [gpu]
     environment:
-        EXTRA_PIP_PACKAGES: "anndata, rapids-singlecell, scanpy, decoupler, wget, zarr"
+        EXTRA_PIP_PACKAGES: "anndata rapids-singlecell scanpy decoupler wget zarr harmonypy leidenalg"
     ports:
       - "0.0.0.0:8888:8888"      # JupyterLab
       - "0.0.0.0:8787:8787"      # Dask dashboard
